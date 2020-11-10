@@ -5,7 +5,7 @@
 class IterativeSolver 
 {
 public:
-	std::vector <int> result;
+	std::vector <Item> result;
 	IterativeSolver()=default;
 	virtual ~IterativeSolver() = default;
 	void Solver(std::vector <Item>, int);
