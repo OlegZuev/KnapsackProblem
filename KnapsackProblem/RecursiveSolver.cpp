@@ -3,6 +3,7 @@
 RecursiveSolver::RecursiveSolver(int m)
 {
     maxW = m;
+    maxPrice = 0;
 }
 
 void RecursiveSolver::Solver(std::vector<Item> items)
