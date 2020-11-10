@@ -1,7 +1,13 @@
 ﻿#pragma once
+#include "Item.h"
+#include <vector>
 
-class IterativeSolver {
+class IterativeSolver 
+{
 public:
-	int a;
+	std::vector <int> result;
+	IterativeSolver()=default;
+	virtual ~IterativeSolver() = default;
+	void Solver(std::vector <Item>, int);
 	
 };
