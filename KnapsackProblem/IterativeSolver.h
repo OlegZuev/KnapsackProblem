@@ -2,5 +2,6 @@
 
 class IterativeSolver {
 public:
+	int a;
 	
 };
