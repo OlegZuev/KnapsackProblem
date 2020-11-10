@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GreedySolver.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="IterativeSolver.h" />
     <ClInclude Include="RecursiveSolver.h" />
   </ItemGroup>
