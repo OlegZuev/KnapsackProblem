@@ -8,12 +8,10 @@
 
 #include "GreedySolver.h"
 
-const int MAX_WEIGHT = 20;
+const double MAX_WEIGHT = 20;
 const double MULTIPLIER = 4; //how many items
 
-// kovil77`s print. IDK need to make interface and use 1 print for all methods.
-// And (or) need to put it somewhere else.
-void PrintResult(int max_value, std::vector<Item> items);
+void run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver);
 
 int main()
 {
@@ -21,6 +19,9 @@ int main()
 	// first test of KnapsackProblemGenerator and RecursiveSolver
 	KnapsackProblemGenerator kpg(MAX_WEIGHT);
 	kpg.set_weight_multiplier(MULTIPLIER);
+
+	KnapsackProblemSolver* iterative_solver = new IterativeSolver();
+	KnapsackProblemSolver* greedy_solver = new GreedySolver();
 
 	for (int i = 0; i < 10000; i++)
 	{
@@ -39,24 +40,12 @@ int main()
 		// rs.PrintResult();
 		// unsigned int end_time = clock(); // конечное время
 		// std::cout << "time: " << end_time - start_time << std::endl; // искомое время
-		//
-		// std::cout << std::endl;
-		//
-		// start_time = clock();
-		// // iterative solution
-		// IterativeSolver is;
-		// is.Solver(items, MAX_WEIGHT);
-		// PrintResult(is.best_value, is.result);
-		// end_time = clock(); // конечное время
-		// std::cout << "time: " << end_time - start_time << std::endl; // искомое время
+		
+		// iterative solution
+		run_method(MAX_WEIGHT, items, iterative_solver);
 
-		unsigned int start_time = clock(); // начальное время
 		// greedy solution
-		KnapsackProblemSolver* problem_solver = new GreedySolver();
-		Variant result = problem_solver->solve(items, MAX_WEIGHT);
-		problem_solver->print_variant(result);
-		unsigned int end_time = clock(); // конечное время
-		std::cout << "time: " << end_time - start_time << std::endl; // искомое время
+		run_method(MAX_WEIGHT, items, greedy_solver);
 
 		std::cout << std::endl;
 
@@ -67,9 +56,12 @@ int main()
 }
 
 
-void PrintResult(int max_value, std::vector<Item> items)
+void run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver)
 {
-	std::cout << "Result value: " << max_value << std::endl;
-	for (int i = 0; i < items.size(); i++)
-		std::cout << items[i].value << " " << items[i].weight << std::endl;
+	unsigned int start_time = clock(); 
+	Variant result = problem_solver->solve(items, M);
+	problem_solver->print_variant(result);
+	unsigned int end_time = clock();
+	std::cout << "Time: " << end_time - start_time << "ms" << std::endl;
+	std::cout << std::endl;
 }
