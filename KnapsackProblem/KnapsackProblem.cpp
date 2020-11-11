@@ -5,7 +5,8 @@
 #include "RecursiveSolver.h"
 #include "IterativeSolver.h"
 
-const int MAX_WEIGHT = 15;
+const int MAX_WEIGHT = 10;
+const double MULTIPLIER = 2; //how mane items
 
 // kovil77`s print. IDK need to make interface and use 1 print for all methods.
 // And (or) need to put it somewhere else.
@@ -16,6 +17,7 @@ int main()
 
 	// first test of KnapsackProblemGenerator and RecursiveSolver
 	KnapsackProblemGenerator kpg(MAX_WEIGHT);
+	kpg.set_weight_multiplier(MULTIPLIER);
 
 	for (int i = 0; i < 10000; i++)
 	{

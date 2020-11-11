@@ -9,61 +9,70 @@ struct Variant
 	double value = 0;
 };
 
+/*
+* function, that get copy of struct variant
+*/
 Variant get_copy_variant(Variant& variant)
 {
 	Variant new_var;
 	new_var.value = variant.value;
 	new_var.weight = variant.weight;
-	for (int  i = 0; i < variant.items.size(); i++)
+	for (int i = 0; i < variant.items.size(); i++)
 	{
 		new_var.items.push_back(variant.items[i]);
 	}
 	return new_var;
 }
 
+/*
+* Iterative solver
+*/
 void IterativeSolver::Solver(std::vector <Item> items, int m)
 {
 	std::vector<Variant> knapsack_variants;
+	// empty knapsack
 	Variant empty;
 	knapsack_variants.push_back(empty);
 
+	// take the best variant. First of all it is empty
+	Variant* best_variant = &empty;
+
 	// create all posible variants of the knapsack
-	for (Item item : items)
+	// Look every item
+	for(Item item : items)
 	{
 		int n = knapsack_variants.size();
+		// Look every posible variant
 		for (int i = 0; i < n; i++)
 		{
-			Variant temp = get_copy_variant(knapsack_variants[i]);			
+			Variant temp = get_copy_variant(knapsack_variants[i]);
 
 			temp.items.push_back(item);
 			temp.value += item.value;
 			temp.weight += item.weight;
 
-			knapsack_variants.push_back(temp);
-		}
-	}
+			// if variants fits in knapsack
+			if (temp.weight <= m)
+			{
+				// if it the best variant. need remember it
+				if (temp.value > best_variant->value)
+				{
+					*best_variant = temp;
+				}
 
-	// take the best variant
-	double best_value = 0;
-	int best_variant_index = 0;
-	double best_weight;
-	for (int i = 0; i < knapsack_variants.size(); i++)
-	{
-		if (knapsack_variants[i].weight <= m && knapsack_variants[i].value > best_value)
-		{
-			best_weight = knapsack_variants[i].weight;
-			best_value = knapsack_variants[i].value;
-			best_variant_index = i;
+				// add to list new variant with current item
+				knapsack_variants.push_back(temp);
+			}
 		}
 	}
 
 	// fill result
 	result.clear();
-	this->best_weight = best_weight;
-	this->best_value = best_value;
-	for (int i = 0; i < knapsack_variants[best_variant_index].items.size(); i++)
+	this->best_weight = best_variant->weight;
+	this->best_value = best_variant->value;
+	for (int i = 0; i < best_variant->items.size(); i++)
 	{
-		this->result.push_back(knapsack_variants[best_variant_index].items[i]);
+		this->result.push_back(best_variant->items[i]);
 	}
 }
 
