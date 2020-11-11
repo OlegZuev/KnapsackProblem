@@ -1,63 +1,31 @@
 ﻿#include "RecursiveSolver.h"
 
-RecursiveSolver::RecursiveSolver(int m)
+void RecursiveSolver::Solver(std::vector<Item> items, double M, int i, Variant curItems)
 {
-    maxW = m;
-    maxPrice = 0;
+    if (curItems.sum_weight > M)
+        return;
+    if (curItems.sum_value >= result.sum_value)
+        result = curItems;
+    if (i == items.size()) 
+        return;
+
+    Solver(items, M, i + 1, curItems);
+    curItems.items.push_back(items[i]);
+    curItems.sum_weight += items[i].weight;
+    curItems.sum_value += items[i].value;
+    Solver(items, M, i + 1, curItems); 
 }
 
-void RecursiveSolver::Solver(std::vector<Item> items)
+Variant RecursiveSolver::solve(std::vector<Item> items, double M)
 {
-    if (items.size() > 0)
-        CheckSet(items);
-    for (int i = 0; i < items.size(); i++)
-    {
-        std::vector <Item> newSet(items);
-        newSet.erase(newSet.begin() + i);
-        Solver(newSet);
-    }
+    Variant a;
+    result = a;
+    Solver(items, M, 0, Variant());
+    return result;
 }
 
-void RecursiveSolver::CheckSet(std::vector<Item> items)
+std::string RecursiveSolver::get_name() 
 {
-    if (result.empty())
-    {
-        if (CalcWeigth(items) <= maxW)
-        {
-            result = items;
-            maxPrice = CalcPrice(items);
-        }
-    }
-    else
-    {
-        if (CalcWeigth(items) <= maxW && CalcPrice(items) > maxPrice)
-        {
-            result = items;
-            maxPrice = CalcPrice(items);
-        }
-    }
+    return "Recursive method";
 }
 
-double RecursiveSolver::CalcPrice(std::vector<Item>items)
-{
-    double sumPr = 0;
-    for (int i = 0; i < items.size(); i++)
-        sumPr += items[i].value;
-    return sumPr;
-}
-
-double RecursiveSolver::CalcWeigth(std::vector<Item> items)
-{
-    double sumW = 0;
-    for(int i=0;i<items.size();i++)
-        sumW += items[i].weight;
-    return sumW;
-    
-}
-
-void RecursiveSolver::PrintResult()
-{
-    std::cout << "Result value: " << maxPrice << std::endl;
-    for (int i = 0; i < result.size(); i++)
-        std::cout << result[i].value << " " << result[i].weight << std::endl;
-}

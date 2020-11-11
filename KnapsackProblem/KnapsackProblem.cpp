@@ -8,8 +8,8 @@
 
 #include "GreedySolver.h"
 
-const double MAX_WEIGHT = 20;
-const double MULTIPLIER = 4; //how many items
+const double MAX_WEIGHT = 200;
+const double MULTIPLIER = 20; //how many items
 
 void run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver);
 
@@ -20,6 +20,9 @@ int main()
 	KnapsackProblemGenerator kpg(MAX_WEIGHT);
 	kpg.set_weight_multiplier(MULTIPLIER);
 
+
+
+	KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
 	KnapsackProblemSolver* iterative_solver = new IterativeSolver();
 	KnapsackProblemSolver* greedy_solver = new GreedySolver();
 
@@ -41,6 +44,9 @@ int main()
 		// unsigned int end_time = clock(); // конечное время
 		// std::cout << "time: " << end_time - start_time << std::endl; // искомое время
 		
+		// recursive solution
+		run_method(MAX_WEIGHT, items, recursive_solver);
+
 		// iterative solution
 		run_method(MAX_WEIGHT, items, iterative_solver);
 

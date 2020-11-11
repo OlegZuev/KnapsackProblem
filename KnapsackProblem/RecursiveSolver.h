@@ -7,15 +7,10 @@
 class RecursiveSolver : public KnapsackProblemSolver
 {
 public:
-	std::vector <Item> result;
-	double maxW;
-	double maxPrice;
-	RecursiveSolver(int m);
+	Variant result;
+	RecursiveSolver()=default;
 	virtual ~RecursiveSolver() = default;
-	void Solver(std::vector<Item>);
-	void CheckSet(std::vector<Item>);
-	double CalcPrice(std::vector<Item>);
-	double CalcWeigth(std::vector<Item>);
-	void PrintResult();
+	void Solver(std::vector<Item> items, double M, int i, Variant curItems);
 	Variant solve(std::vector<Item> items, double M) override;
+	std::string get_name() override;
 };
