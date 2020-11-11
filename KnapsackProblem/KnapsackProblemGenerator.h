@@ -4,8 +4,7 @@
 #include <vector>
 #include <random>
 
-class KnapsackProblemGenerator
-{
+class KnapsackProblemGenerator {
 public:
 	KnapsackProblemGenerator();
 	KnapsackProblemGenerator(int max_weight);

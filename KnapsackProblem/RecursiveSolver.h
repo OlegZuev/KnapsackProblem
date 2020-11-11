@@ -4,11 +4,10 @@
 #include<iostream>
 #include<vector>
 
-class RecursiveSolver : public KnapsackProblemSolver
-{
+class RecursiveSolver : public KnapsackProblemSolver {
 public:
 	Variant result;
-	RecursiveSolver()=default;
+	RecursiveSolver() = default;
 	virtual ~RecursiveSolver() = default;
 	void Solver(std::vector<Item> items, double M, int i, Variant curItems);
 	Variant solve(std::vector<Item> items, double M) override;
