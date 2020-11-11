@@ -37,12 +37,12 @@ void IterativeSolver::Solver(std::vector <Item> items, int m)
 	// take the best variant. First of all it is empty
 	Variant* best_variant = &empty;
 
-	// create all posible variants of the knapsack
+	// create all possible variants of the knapsack
 	// Look every item
 	for(Item item : items)
 	{
 		int n = knapsack_variants.size();
-		// Look every posible variant
+		// Look every possible variant
 		for (int i = 0; i < n; i++)
 		{
 			Variant temp = get_copy_variant(knapsack_variants[i]);
@@ -70,9 +70,8 @@ void IterativeSolver::Solver(std::vector <Item> items, int m)
 	result.clear();
 	this->best_weight = best_variant->weight;
 	this->best_value = best_variant->value;
-	for (int i = 0; i < best_variant->items.size(); i++)
-	{
-		this->result.push_back(best_variant->items[i]);
+	for (auto item : best_variant->items) {
+		this->result.push_back(item);
 	}
 }
 

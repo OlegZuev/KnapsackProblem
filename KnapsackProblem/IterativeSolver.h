@@ -1,8 +1,9 @@
 ﻿#pragma once
+#include "KnapsackProblemSolver.h"
 #include "Item.h"
 #include <vector>
 
-class IterativeSolver
+class IterativeSolver : KnapsackProblemSolver
 {
 public:
 	double best_weight;
@@ -11,4 +12,5 @@ public:
 	IterativeSolver() = default;
 	virtual ~IterativeSolver() = default;
 	void Solver(std::vector <Item>, int);
+	Variant solver(std::vector<Item> items, double M) override;
 };
