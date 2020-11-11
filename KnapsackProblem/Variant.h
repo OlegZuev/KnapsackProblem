@@ -10,7 +10,7 @@ public:
 	double sum_weight{};
 
 	explicit Variant(std::vector<Item> items);
-	Variant() = delete;
+	Variant() = default;
 	virtual ~Variant() = default;
 	Variant(Variant& other);
 	Variant& operator=(Variant other);
