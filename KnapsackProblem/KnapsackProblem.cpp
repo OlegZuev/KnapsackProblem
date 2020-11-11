@@ -5,17 +5,17 @@
 #include "RecursiveSolver.h"
 #include "IterativeSolver.h"
 #include <ctime>
+#include <utility>
 #include "GreedySolver.h"
 
 const double MAX_WEIGHT = 200;
-const double MULTIPLIER = 20; //how many items
+const int COUNT_OF_ELEMENTS = 40; //how many items
 
 void run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver);
 
 int main() {
 	// first test of KnapsackProblemGenerator and RecursiveSolver
-	KnapsackProblemGenerator kpg(MAX_WEIGHT);
-	kpg.set_weight_multiplier(MULTIPLIER);
+	KnapsackProblemGenerator kpg(COUNT_OF_ELEMENTS, MAX_WEIGHT);
 	KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
 	KnapsackProblemSolver* iterative_solver = new IterativeSolver();
 	KnapsackProblemSolver* greedy_solver = new GreedySolver();
@@ -26,17 +26,23 @@ int main() {
 
 		// generate random items
 		std::vector<Item> items = kpg.get_random_items();
-		kpg.print_knapsack_problem(items, MAX_WEIGHT, std::cout);
+		// std::vector<Item> items;
+		// items.reserve(COUNT_OF_ELEMENTS);
+		// for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
+		// 	items.push_back(Item{1, double(i), i + 1});
+		// }
+
+		KnapsackProblemGenerator::print_knapsack_problem(items, MAX_WEIGHT, std::cout);
 		std::cout << std::endl;
+
+		// greedy solution
+		run_method(MAX_WEIGHT, items, greedy_solver);
 
 		// recursive solution
 		run_method(MAX_WEIGHT, items, recursive_solver);
 
 		// iterative solution
 		run_method(MAX_WEIGHT, items, iterative_solver);
-
-		// greedy solution
-		run_method(MAX_WEIGHT, items, greedy_solver);
 
 		std::cout << std::endl;
 

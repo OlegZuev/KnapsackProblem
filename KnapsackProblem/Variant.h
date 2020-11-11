@@ -13,6 +13,7 @@ public:
 	Variant() = default;
 	virtual ~Variant() = default;
 	Variant(Variant& other);
+	Variant(const Variant& other);
 	Variant& operator=(Variant other);
 	Variant(Variant&& other) noexcept;
 	Variant& operator=(Variant&& other) noexcept;

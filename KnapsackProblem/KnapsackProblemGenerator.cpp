@@ -1,80 +1,61 @@
 #include "KnapsackProblemGenerator.h"
 
-KnapsackProblemGenerator::KnapsackProblemGenerator() : _max_weight(0), dist(nullptr), _multiplier(1.5) {}
+#include <iomanip>
 
-KnapsackProblemGenerator::KnapsackProblemGenerator(int max_weight) : dist(nullptr), _multiplier(1.5) {
-	set_max_weight(max_weight);
+KnapsackProblemGenerator::KnapsackProblemGenerator() : count_of_elements(5) {
+	dist = std::uniform_int_distribution<int>(1, static_cast<int>(10));
 }
 
-KnapsackProblemGenerator::~KnapsackProblemGenerator() {
-	if (dist != nullptr) {
-		delete dist;
-	}
+KnapsackProblemGenerator::KnapsackProblemGenerator(int count_of_elements, double max_weight)  {
+	this->count_of_elements = count_of_elements;
+	dist = std::uniform_int_distribution<int>(1, static_cast<int>(max_weight));
 }
 
 /*
 * Gets random 1 <= int <= max_weight
 */
 int KnapsackProblemGenerator::get_random_int() {
-	return (*dist)(_random_device);
+	return (dist)(_random_device);
 }
 
 /*
-* Gets vector<Item> of randrom items. Total weight >= max_weight
+* Gets vector<Item> of random items. Total weight >= max_weight
 */
 std::vector<Item> KnapsackProblemGenerator::get_random_items() {
 	std::vector<Item> items;
-
-	int weight = 0;
-	while (weight < _max_weight * _multiplier) {
-		Item item;
+	int count = 0;
+	while (count < count_of_elements) {
+		Item item{};
 		item.value = get_random_int();
 		item.weight = get_random_int();
+		item.index = items.size() + 1;
 		items.push_back(item);
-		weight += item.weight;
+		count++;
 	}
 
 	return items;
 }
 
 /*
-* Sets max_weight of knapsack
-*/
-void KnapsackProblemGenerator::set_max_weight(int max_weight) {
-	this->_max_weight = max_weight;
-
-	if (dist != nullptr) {
-		delete dist;
-	}
-
-	dist = new std::uniform_int_distribution<int>(1, _max_weight);
-}
-
-/*
-* Sets the multiplier. The multiplier is used to stop generating items. 
-* The sum of weight items must be smaller than
-* the capacity of the backpack is multiplied by the multiplier
-*/
-void KnapsackProblemGenerator::set_weight_multiplier(double multiplier) {
-	if (multiplier <= 0) return;
-
-	this->_multiplier = multiplier;
-}
-
-/*
 * Print knapsack problem
 */
-void KnapsackProblemGenerator::print_knapsack_problem(std::vector<Item> items, int m, std::ostream& ostr) {
-	ostr << m << std::endl;
-
-	for (int i = 0; i < items.size(); i++) {
-		ostr << items[i].weight << " ";
+void KnapsackProblemGenerator::print_knapsack_problem(const std::vector<Item>& items, double m, std::ostream& ostr) {
+	ostr << "M: " << m << std::endl;
+	const int output_width = 3;
+	const int precision = 0;
+	ostr << std::endl << "Indexes: ";
+	for (const Item& item : items) {
+		ostr << std::fixed << std::setprecision(precision) << std::setw(output_width) << item.index << " ";
 	}
 
-	ostr << std::endl;
+	ostr << std::endl << "Weights: ";
+	for (const Item& item : items) {
+		ostr << std::fixed << std::setprecision(precision) << std::setw(output_width) << item.weight << " ";
+	}
 
-	for (int i = 0; i < items.size(); i++) {
-		ostr << items[i].value << " ";
+	ostr << std::endl << "Values:  ";
+	for (const Item& item : items) {
+		ostr << std::fixed << std::setprecision(precision) << std::setw(output_width) << item.value << " ";
 	}
 
 	ostr << std::endl;

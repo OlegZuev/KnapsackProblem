@@ -6,17 +6,13 @@
 
 class KnapsackProblemGenerator {
 public:
+	int count_of_elements;
 	KnapsackProblemGenerator();
-	KnapsackProblemGenerator(int max_weight);
-	~KnapsackProblemGenerator();
+	KnapsackProblemGenerator(int count_of_elements, double max_weight);
 	std::vector<Item> get_random_items();
 	int get_random_int();
-	void set_max_weight(int max_weight);
-	void set_weight_multiplier(double multiplier);
-	void print_knapsack_problem(std::vector<Item> items, int m, std::ostream& ostr);
+	static void print_knapsack_problem(const std::vector<Item>& items, double m, std::ostream& ostr);
 private:
-	int _max_weight;
-	double _multiplier;
 	std::random_device _random_device;
-	std::uniform_int_distribution<int>* dist;
+	std::uniform_int_distribution<int> dist;
 };

@@ -5,7 +5,7 @@ Variant::Variant(std::vector<Item> items) {
 	this->items = std::move(items);
 	double weight = 0;
 	double value = 0;
-	for (Item item : this->items) {
+	for (const Item& item : this->items) {
 		weight += item.weight;
 		value += item.value;
 	}
@@ -15,6 +15,12 @@ Variant::Variant(std::vector<Item> items) {
 }
 
 Variant::Variant(Variant& other) {
+	this->items = other.items;
+	this->sum_weight = other.sum_weight;
+	this->sum_value = other.sum_value;
+}
+
+Variant::Variant(const Variant& other) {
 	this->items = other.items;
 	this->sum_weight = other.sum_weight;
 	this->sum_value = other.sum_value;
