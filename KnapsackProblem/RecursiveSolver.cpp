@@ -54,3 +54,10 @@ double RecursiveSolver::CalcWeigth(std::vector<Item> items)
     return sumW;
     
 }
+
+void RecursiveSolver::PrintResult()
+{
+    std::cout << "Result value: " << maxPrice << std::endl;
+    for (int i = 0; i < result.size(); i++)
+        std::cout << result[i].value << " " << result[i].weight << std::endl;
+}

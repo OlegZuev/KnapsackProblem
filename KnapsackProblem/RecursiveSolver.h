@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Item.h"
+#include<iostream>
 #include<vector>
 class RecursiveSolver
 {
@@ -13,4 +14,5 @@ public:
 	void CheckSet(std::vector<Item>);
 	double CalcPrice(std::vector<Item>);
 	double CalcWeigth(std::vector<Item>);
+	void PrintResult();
 };
