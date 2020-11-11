@@ -4,7 +4,7 @@
 #include<iostream>
 #include<vector>
 
-class RecursiveSolver : KnapsackProblemSolver
+class RecursiveSolver : public KnapsackProblemSolver
 {
 public:
 	std::vector <Item> result;
@@ -17,5 +17,5 @@ public:
 	double CalcPrice(std::vector<Item>);
 	double CalcWeigth(std::vector<Item>);
 	void PrintResult();
-	Variant solver(std::vector<Item> items, double M) override;
+	Variant solve(std::vector<Item> items, double M) override;
 };

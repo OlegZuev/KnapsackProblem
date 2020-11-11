@@ -3,8 +3,8 @@
 #include "Item.h"
 #include "KnapsackProblemSolver.h"
 
-class GreedySolver : KnapsackProblemSolver {
+class GreedySolver : public KnapsackProblemSolver {
 public:
-
-	Variant solver(std::vector<Item> items, double M) override;
+	Variant solve(std::vector<Item> items, double M) override;
+	std::string get_name() override;
 };

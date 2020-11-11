@@ -6,6 +6,8 @@
 #include "IterativeSolver.h"
 #include <ctime>
 
+#include "GreedySolver.h"
+
 const int MAX_WEIGHT = 20;
 const double MULTIPLIER = 4; //how many items
 
@@ -30,23 +32,33 @@ int main()
 		kpg.print_knapsack_problem(items, MAX_WEIGHT, std::cout);
 		std::cout << std::endl;
 
+		// unsigned int start_time = clock(); // начальное время
+		// // recursive solution
+		// RecursiveSolver rs(MAX_WEIGHT);
+		// rs.Solver(items);
+		// rs.PrintResult();
+		// unsigned int end_time = clock(); // конечное время
+		// std::cout << "time: " << end_time - start_time << std::endl; // искомое время
+		//
+		// std::cout << std::endl;
+		//
+		// start_time = clock();
+		// // iterative solution
+		// IterativeSolver is;
+		// is.Solver(items, MAX_WEIGHT);
+		// PrintResult(is.best_value, is.result);
+		// end_time = clock(); // конечное время
+		// std::cout << "time: " << end_time - start_time << std::endl; // искомое время
+
 		unsigned int start_time = clock(); // начальное время
-		// recursive solution
-		RecursiveSolver rs(MAX_WEIGHT);
-		rs.Solver(items);
-		rs.PrintResult();
+		// greedy solution
+		KnapsackProblemSolver* problem_solver = new GreedySolver();
+		Variant result = problem_solver->solve(items, MAX_WEIGHT);
+		problem_solver->print_variant(result);
 		unsigned int end_time = clock(); // конечное время
 		std::cout << "time: " << end_time - start_time << std::endl; // искомое время
 
 		std::cout << std::endl;
-
-		start_time = clock();
-		// iterative solution
-		IterativeSolver is;
-		is.Solver(items, MAX_WEIGHT);
-		PrintResult(is.best_value, is.result);
-		end_time = clock(); // конечное время
-		std::cout << "time: " << end_time - start_time << std::endl; // искомое время
 
 		system("pause");
 	}

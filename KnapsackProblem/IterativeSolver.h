@@ -3,7 +3,7 @@
 #include "Item.h"
 #include <vector>
 
-class IterativeSolver : KnapsackProblemSolver
+class IterativeSolver : public KnapsackProblemSolver
 {
 public:
 	double best_weight;
@@ -12,5 +12,5 @@ public:
 	IterativeSolver() = default;
 	virtual ~IterativeSolver() = default;
 	void Solver(std::vector <Item>, int);
-	Variant solver(std::vector<Item> items, double M) override;
+	Variant solve(std::vector<Item> items, double M) override;
 };
