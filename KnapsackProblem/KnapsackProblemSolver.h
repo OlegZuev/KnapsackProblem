@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <string>
 #include "Variant.h"
 
 class KnapsackProblemSolver {
@@ -16,6 +17,12 @@ public:
 	 * @return some solution of knapsack problem 
 	 */
 	virtual Variant solver(std::vector<Item> items, double M) = 0;
+
+	/*
+	 * Returns method name of solution of knapsack problem
+	 * @return name
+	 */
+	virtual std::string get_name() = 0;
 	static void print_variant(const Variant& variant);
 
 protected:
