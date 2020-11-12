@@ -57,18 +57,18 @@ const int COUNT_OF_AVERAGE_LOADS = 3;
 const int COUNT_OF_TESTING_GREEDY = 1000;
 
 const bool PRINT_TO_FILE = true;
-const bool USE_RANDOM_FOR_INPUT = true; // input from file if false
+const bool USE_RANDOM_FOR_INPUT = false; // input from file if false
 
 //const std::string INPUT_FILE_NAME = "input1.txt";
 const std::string INPUT_FILE_NAME = "input1.txt";
-const std::string OUTPUT_FILE_NAME = "output3.txt";
+const std::string OUTPUT_FILE_NAME = "output_1.txt";
 
 void input_method(double& M, std::vector<Item>& items, std::istream& fin);
 void run_method(double M, int count_of_elements, std::ostream& ostr);
 void run_test(double M, std::vector<Item> items, KnapsackProblemSolver* recursive_solver, KnapsackProblemSolver* iterative_solver, KnapsackProblemSolver* greedy_solver, std::ostream& ostr);
 unsigned int run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver, std::ostream& ostr);
 void show_t_n(double (*fun)(int), double C, std::ostream& ostr);
-void test_func_of_coplexity(std::ostream& ostr);
+void test_func_of_complexity(std::ostream& ostr);
 void test_greedy(std::ostream& ostr);
 
 int main()
@@ -78,51 +78,51 @@ int main()
 
 	std::ifstream fin("../" + INPUT_FILE_NAME);
 
-	//// Usual load of KnapsackProblem for every method
-	//KnapsackProblemGenerator kpg(COUNT_OF_ELEMENTS, MAX_WEIGHT);
-	//KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
-	//KnapsackProblemSolver* iterative_solver = new IterativeSolver();
-	//KnapsackProblemSolver* greedy_solver = new GreedySolver();
+	// Usual load of KnapsackProblem for every method
+	KnapsackProblemGenerator kpg(COUNT_OF_ELEMENTS, MAX_WEIGHT);
+	KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
+	KnapsackProblemSolver* iterative_solver = new IterativeSolver();
+	KnapsackProblemSolver* greedy_solver = new GreedySolver();
 
-	//int count_of_iteration = 1;
-	//if (USE_RANDOM_FOR_INPUT) count_of_iteration = 1000;
-	//for (int i = 0; i < count_of_iteration; i++)
-	//{
-	//	ostr << std::endl;
-	//	ostr << std::endl;
+	int count_of_iteration = 1;
+	if (USE_RANDOM_FOR_INPUT) count_of_iteration = 1000;
+	for (int i = 0; i < count_of_iteration; i++)
+	{
+		ostr << std::endl;
+		ostr << std::endl;
 
-	//	std::vector<Item> items;
-	//	double M = MAX_WEIGHT;
-	//	if (USE_RANDOM_FOR_INPUT)
-	//	{
-	//		// generate random items
-	//		//items = kpg.get_random_items();
-	//		items = kpg.get_bad_items();
-	//		//items = kpg.get_avg_items();
-	//		//items = kpg.get_good_items();
-	//	}
-	//	else
-	//	{
-	//		input_method(M, items, fin);
-	//	}
+		std::vector<Item> items;
+		double M = MAX_WEIGHT;
+		if (USE_RANDOM_FOR_INPUT)
+		{
+			// generate random items
+			items = kpg.get_random_items();
+			//items = kpg.get_bad_items();
+			//items = kpg.get_avg_items();
+			//items = kpg.get_good_items();
+		}
+		else
+		{
+			input_method(M, items, fin);
+		}
 
-	//	KnapsackProblemGenerator::print_knapsack_problem(items, M, ostr);
-	//	ostr << std::endl;
+		KnapsackProblemGenerator::print_knapsack_problem(items, M, ostr);
+		ostr << std::endl;
 
-	//	// greedy solution
-	//	run_method(M, items, greedy_solver, ostr);
+		// greedy solution
+		run_method(M, items, greedy_solver, ostr);
 
-	//	// recursive solution
-	//	run_method(M, items, recursive_solver, ostr);
+		// recursive solution
+		run_method(M, items, recursive_solver, ostr);
 
-	//	// iterative solution
-	//	run_method(M, items, iterative_solver, ostr);
-	//		
-	//		
-	//		ostr << std::endl;
+		// iterative solution
+		run_method(M, items, iterative_solver, ostr);
 
-	//	system("pause");
-	//}
+
+		ostr << std::endl;
+
+		system("pause");
+	}
 
 
 	//// Testing programm time
@@ -134,8 +134,8 @@ int main()
 
 
 	// Testing greedy method
-	test_greedy(ostr);
-	
+	//test_greedy(ostr);
+
 
 	fin.close();
 	fout.close();
@@ -246,7 +246,7 @@ void show_t_n(double (*fun)(int), double C, std::ostream& ostr)
 	ostr << std::endl;
 }
 
-void test_func_of_coplexity(std::ostream& ostr)
+void test_func_of_complexity(std::ostream& ostr)
 {
 	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
 	{
@@ -301,7 +301,7 @@ void test_greedy(std::ostream& ostr)
 			if (res1.sum_value == res2.sum_value) count++;
 			err += (res2.sum_value - res1.sum_value) / res2.sum_value;
 		}
-		ostr << "N: " << N << " Percent " << (double(count) * 100 / COUNT_OF_TESTING_GREEDY) 
+		ostr << "N: " << N << " Percent " << (double(count) * 100 / COUNT_OF_TESTING_GREEDY)
 			<< " ERROR: " << err / COUNT_OF_TESTING_GREEDY << std::endl;
 	}
 }

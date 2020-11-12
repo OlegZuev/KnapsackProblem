@@ -1,0 +1,30 @@
+
+
+N: 20 M: 200
+
+Indexes:   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 
+Weights: 112  69  34  67  52 123  33  68 127 115 185  63  61  96  57  55  94  89 140 182 
+Values:   13 167 127  33  42 191 151 187 134  86  61  73 146  14 197 176  65 185 154  19 
+
+Sum value: 651
+Greedy method
+Indexes:    6   2  14  15 
+Weights:  33  34  57  55 
+Values:  151 127 197 176 
+Time: 0ms
+
+Sum value: 662
+Recursive method
+Indexes:    2   6   7  14 
+Weights:  34  33  68  57 
+Values:  127 151 187 197 
+Time: 31ms
+
+Sum value: 662
+Iterative method
+Indexes:    2   6   7  14 
+Weights:  34  33  68  57 
+Values:  127 151 187 197 
+Time: 13ms
+
+
