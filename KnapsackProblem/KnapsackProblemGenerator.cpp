@@ -40,7 +40,7 @@ std::vector<Item> KnapsackProblemGenerator::get_random_items() {
 * Print knapsack problem
 */
 void KnapsackProblemGenerator::print_knapsack_problem(const std::vector<Item>& items, double m, std::ostream& ostr) {
-	ostr << "M: " << m << std::endl;
+	ostr << "N: " << items.size() << " M: " << m << std::endl;
 	const int output_width = 3;
 	const int precision = 0;
 	ostr << std::endl << "Indexes: ";

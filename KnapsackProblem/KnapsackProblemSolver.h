@@ -23,7 +23,7 @@ public:
 	 * @return name
 	 */
 	virtual std::string get_name() = 0;
-	void print_variant(const Variant& variant);
+	void print_variant(const Variant& variant, std::ostream& ostr);
 
 protected:
 	KnapsackProblemSolver() = default;
