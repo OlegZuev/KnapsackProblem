@@ -77,6 +77,9 @@ int main() {
 
 		system("pause");
 	}
+
+	fin.close();
+	fout.close();
 }
 
 void input_method(double& M, std::vector<Item>& items, std::istream& fin)
