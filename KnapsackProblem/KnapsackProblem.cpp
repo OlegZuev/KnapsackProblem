@@ -11,10 +11,10 @@
 #include <string>
 
 const double MAX_WEIGHT = 200;
-const int COUNT_OF_ELEMENTS = 20; // count of items
+const int COUNT_OF_ELEMENTS = 28; // count of items
 
-const bool PRINT_TO_FILE = true;
-const bool USE_RANDOM_FOR_INPUT = false; // input from file if false
+const bool PRINT_TO_FILE = false;
+const bool USE_RANDOM_FOR_INPUT = true; // input from file if false
 
 const std::string INPUT_FILE_NAME = "input1.txt";
 const std::string OUTPUT_FILE_NAME = "output1.txt";
@@ -43,12 +43,17 @@ int main() {
 		double M = MAX_WEIGHT;
 		if (USE_RANDOM_FOR_INPUT) {
 			// generate random items
-			items = kpg.get_random_items();
+			//items = kpg.get_random_items();
 
 			/*items.reserve(COUNT_OF_ELEMENTS);
 			for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
 			items.push_back(Item{1, double(i), i + 1});
 			}*/
+
+			items.reserve(COUNT_OF_ELEMENTS);
+			for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
+			items.push_back(Item{2* MAX_WEIGHT / items.size(), double(i), i + 1});
+			}
 
 			/*items.reserve(COUNT_OF_ELEMENTS);
 			for (int i = 0; i < COUNT_OF_ELEMENTS; i++)
@@ -68,7 +73,7 @@ int main() {
 		run_method(M, items, greedy_solver, ostr);
 
 		// recursive solution
-		run_method(M, items, recursive_solver, ostr);
+		//run_method(M, items, recursive_solver, ostr);
 
 		// iterative solution
 		run_method(M, items, iterative_solver, ostr);
