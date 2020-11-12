@@ -10,6 +10,47 @@
 #include <fstream>
 #include <string>
 
+double t_rec_min(int n)
+{
+	return 14.0 * n - 9.0;
+}
+double t_rec_max(int n)
+{
+	return 17 * pow(2, n) - 12;
+}
+double t_rec_avg(int n)
+{
+	return 18 * pow(1.25, n);
+}
+
+double t_iter_min(int n)
+{
+	return 2.0 + 23.0 * n / 2 + 9.0 * n * n / 2;
+}
+double t_iter_max(int n)
+{
+	return 12.0 * pow(2, n) + 4.0 * n - 10;
+}
+double t_iter_avg(int n)
+{
+	return -22.0 + 24.0 * pow(1.5, n) + 4.0 * n;
+}
+
+double t_gre_min(int n)
+{
+	return 4.0 * n + n * log(n) + 5;
+}
+double t_gre_max(int n)
+{
+	return 9.0 * n + n * log(n);
+}
+double t_gre_avg(int n)
+{
+	return 6.5 * n + n * log(n) + 5;
+}
+
+
+
 const double MAX_WEIGHT = 200;
 const int COUNT_OF_ELEMENTS = 23; // count of items
 const int COUNT_OF_AVERAGE_LOADS = 3;
@@ -17,13 +58,23 @@ const int COUNT_OF_AVERAGE_LOADS = 3;
 const bool PRINT_TO_FILE = true;
 const bool USE_RANDOM_FOR_INPUT = true; // input from file if false
 
+//const std::string INPUT_FILE_NAME = "input1.txt";
 const std::string INPUT_FILE_NAME = "input1.txt";
-const std::string OUTPUT_FILE_NAME = "output1.txt";
+const std::string OUTPUT_FILE_NAME = "output2.txt";
 
 void input_method(double& M, std::vector<Item>& items, std::istream& fin);
 void run_method(double M, int count_of_elements, std::ostream& ostr);
 void run_test(double M, std::vector<Item> items, KnapsackProblemSolver* recursive_solver, KnapsackProblemSolver* iterative_solver, KnapsackProblemSolver* greedy_solver, std::ostream& ostr);
 unsigned int run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver, std::ostream& ostr);
+
+void show_t_n(double (*fun)(int), double C, std::ostream& ostr)
+{
+	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
+	{
+		ostr << std::fixed << std::setw(9) << std::setprecision(2) << fun(N) * C << " ";
+	}
+	ostr << std::endl;
+}
 
 int main()
 {
@@ -76,7 +127,41 @@ int main()
 	//	system("pause");
 	//}
 
-	run_method(MAX_WEIGHT, COUNT_OF_ELEMENTS, ostr);
+	//run_method(MAX_WEIGHT, COUNT_OF_ELEMENTS, ostr);
+
+	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
+	{
+		ostr << std::fixed << std::setw(9) << std::setprecision(2) << N << " ";
+	}
+
+	ostr << std::endl;
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_min" << std::endl;
+	show_t_n(t_rec_min, 2.00 / t_rec_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_max" << std::endl;
+	show_t_n(t_rec_max, 5448.33 / t_rec_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_avg" << std::endl;
+	show_t_n(t_rec_avg, 3681.67 / t_rec_avg(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_min" << std::endl;
+	show_t_n(t_iter_min, 1.33 / t_iter_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_max" << std::endl;
+	show_t_n(t_iter_max, 6469.67 / t_iter_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_avg" << std::endl;
+	show_t_n(t_iter_avg, 3409.67 / t_iter_avg(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_min" << std::endl;
+	show_t_n(t_gre_min, 1.0 / 3.0 / t_gre_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_max" << std::endl;
+	show_t_n(t_gre_max, 2.0 / 3.0 / t_gre_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_avg" << std::endl;
+	show_t_n(t_gre_avg, 1.0 / 3.0 / t_gre_avg(19), ostr);
 
 	fin.close();
 	fout.close();
