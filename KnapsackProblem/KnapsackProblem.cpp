@@ -20,7 +20,7 @@ double t_rec_max(int n)
 }
 double t_rec_avg(int n)
 {
-	return 18 * pow(1.25, n);
+	return (17 * pow(2, n) - 7 + (n - 1) * 14.0) / 2.0;
 }
 
 double t_iter_min(int n)
@@ -54,39 +54,35 @@ double t_gre_avg(int n)
 const double MAX_WEIGHT = 200;
 const int COUNT_OF_ELEMENTS = 23; // count of items
 const int COUNT_OF_AVERAGE_LOADS = 3;
+const int COUNT_OF_TESTING_GREEDY = 1000;
 
 const bool PRINT_TO_FILE = true;
 const bool USE_RANDOM_FOR_INPUT = true; // input from file if false
 
 //const std::string INPUT_FILE_NAME = "input1.txt";
 const std::string INPUT_FILE_NAME = "input1.txt";
-const std::string OUTPUT_FILE_NAME = "output2.txt";
+const std::string OUTPUT_FILE_NAME = "output3.txt";
 
 void input_method(double& M, std::vector<Item>& items, std::istream& fin);
 void run_method(double M, int count_of_elements, std::ostream& ostr);
 void run_test(double M, std::vector<Item> items, KnapsackProblemSolver* recursive_solver, KnapsackProblemSolver* iterative_solver, KnapsackProblemSolver* greedy_solver, std::ostream& ostr);
 unsigned int run_method(double M, std::vector<Item> items, KnapsackProblemSolver* problem_solver, std::ostream& ostr);
-
-void show_t_n(double (*fun)(int), double C, std::ostream& ostr)
-{
-	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
-	{
-		ostr << std::fixed << std::setw(9) << std::setprecision(2) << fun(N) * C << " ";
-	}
-	ostr << std::endl;
-}
+void show_t_n(double (*fun)(int), double C, std::ostream& ostr);
+void test_func_of_coplexity(std::ostream& ostr);
+void test_greedy(std::ostream& ostr);
 
 int main()
 {
-	/*KnapsackProblemGenerator kpg(COUNT_OF_ELEMENTS, MAX_WEIGHT);
-	KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
-	KnapsackProblemSolver* iterative_solver = new IterativeSolver();
-	KnapsackProblemSolver* greedy_solver = new GreedySolver();*/
-
 	std::ofstream fout("../" + OUTPUT_FILE_NAME);
 	std::ostream& ostr = PRINT_TO_FILE ? fout : std::cout;
 
 	std::ifstream fin("../" + INPUT_FILE_NAME);
+
+	//// Usual load of KnapsackProblem for every method
+	//KnapsackProblemGenerator kpg(COUNT_OF_ELEMENTS, MAX_WEIGHT);
+	//KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
+	//KnapsackProblemSolver* iterative_solver = new IterativeSolver();
+	//KnapsackProblemSolver* greedy_solver = new GreedySolver();
 
 	//int count_of_iteration = 1;
 	//if (USE_RANDOM_FOR_INPUT) count_of_iteration = 1000;
@@ -121,51 +117,30 @@ int main()
 
 	//	// iterative solution
 	//	run_method(M, items, iterative_solver, ostr);
-
-	//	ostr << std::endl;
+	//		
+	//		
+	//		ostr << std::endl;
 
 	//	system("pause");
 	//}
 
+
+	//// Testing programm time
 	//run_method(MAX_WEIGHT, COUNT_OF_ELEMENTS, ostr);
 
-	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
-	{
-		ostr << std::fixed << std::setw(9) << std::setprecision(2) << N << " ";
-	}
 
-	ostr << std::endl;
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_rec_min" << std::endl;
-	show_t_n(t_rec_min, 2.00 / t_rec_min(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_rec_max" << std::endl;
-	show_t_n(t_rec_max, 5448.33 / t_rec_max(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_rec_avg" << std::endl;
-	show_t_n(t_rec_avg, 3681.67 / t_rec_avg(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_iter_min" << std::endl;
-	show_t_n(t_iter_min, 1.33 / t_iter_min(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_iter_max" << std::endl;
-	show_t_n(t_iter_max, 6469.67 / t_iter_max(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_iter_avg" << std::endl;
-	show_t_n(t_iter_avg, 3409.67 / t_iter_avg(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_gre_min" << std::endl;
-	show_t_n(t_gre_min, 1.0 / 3.0 / t_gre_min(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_gre_max" << std::endl;
-	show_t_n(t_gre_max, 2.0 / 3.0 / t_gre_max(19), ostr);
-	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
-	ostr << "t_gre_avg" << std::endl;
-	show_t_n(t_gre_avg, 1.0 / 3.0 / t_gre_avg(19), ostr);
+	//// Testing a function of complexity
+	//test_func_of_coplexity(ostr);
+
+
+	// Testing greedy method
+	test_greedy(ostr);
+	
 
 	fin.close();
 	fout.close();
 }
+
 
 void input_method(double& M, std::vector<Item>& items, std::istream& fin)
 {
@@ -260,4 +235,70 @@ unsigned int run_method(double M, std::vector<Item> items, KnapsackProblemSolver
 	ostr << "Time: " << r << "ms" << std::endl;
 	ostr << std::endl;
 	return r;
+}
+
+void show_t_n(double (*fun)(int), double C, std::ostream& ostr)
+{
+	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
+	{
+		ostr << std::fixed << std::setw(9) << std::setprecision(2) << fun(N) * C << " ";
+	}
+	ostr << std::endl;
+}
+
+void test_func_of_coplexity(std::ostream& ostr)
+{
+	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
+	{
+		ostr << std::fixed << std::setw(9) << std::setprecision(2) << N << " ";
+	}
+
+	ostr << std::endl;
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_min" << std::endl;
+	show_t_n(t_rec_min, 2.00 / t_rec_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_max" << std::endl;
+	show_t_n(t_rec_max, 5448.33 / t_rec_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_rec_avg" << std::endl;
+	show_t_n(t_rec_avg, 3681.67 / t_rec_avg(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_min" << std::endl;
+	show_t_n(t_iter_min, 1.33 / t_iter_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_max" << std::endl;
+	show_t_n(t_iter_max, 6469.67 / t_iter_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_iter_avg" << std::endl;
+	show_t_n(t_iter_avg, 3409.67 / t_iter_avg(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_min" << std::endl;
+	show_t_n(t_gre_min, 1.0 / 3.0 / t_gre_min(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_max" << std::endl;
+	show_t_n(t_gre_max, 2.0 / 3.0 / t_gre_max(19), ostr);
+	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
+	ostr << "t_gre_avg" << std::endl;
+	show_t_n(t_gre_avg, 1.0 / 3.0 / t_gre_avg(19), ostr);
+}
+
+void test_greedy(std::ostream& ostr)
+{
+	KnapsackProblemSolver* recursive_solver = new RecursiveSolver();
+	KnapsackProblemSolver* greedy_solver = new GreedySolver();
+
+	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
+	{
+		int count = 0;
+		KnapsackProblemGenerator kpg(N, MAX_WEIGHT);
+		for (int i = 0; i < COUNT_OF_TESTING_GREEDY; i++)
+		{
+			std::vector<Item> items = kpg.get_random_items();
+			Variant res1 = greedy_solver->solve(items, MAX_WEIGHT);
+			Variant res2 = recursive_solver->solve(items, MAX_WEIGHT);
+			if (res1.sum_value == res2.sum_value) count++;
+		}
+		ostr << "N: " << N << " Percent " << (double(count) * 100 / COUNT_OF_TESTING_GREEDY) << std::endl;
+	}
 }
