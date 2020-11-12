@@ -291,6 +291,7 @@ void test_greedy(std::ostream& ostr)
 	for (int N = 1; N <= COUNT_OF_ELEMENTS; N += 2)
 	{
 		int count = 0;
+		double err = 0;
 		KnapsackProblemGenerator kpg(N, MAX_WEIGHT);
 		for (int i = 0; i < COUNT_OF_TESTING_GREEDY; i++)
 		{
@@ -298,7 +299,9 @@ void test_greedy(std::ostream& ostr)
 			Variant res1 = greedy_solver->solve(items, MAX_WEIGHT);
 			Variant res2 = recursive_solver->solve(items, MAX_WEIGHT);
 			if (res1.sum_value == res2.sum_value) count++;
+			err += (res2.sum_value - res1.sum_value) / res2.sum_value;
 		}
-		ostr << "N: " << N << " Percent " << (double(count) * 100 / COUNT_OF_TESTING_GREEDY) << std::endl;
+		ostr << "N: " << N << " Percent " << (double(count) * 100 / COUNT_OF_TESTING_GREEDY) 
+			<< " ERROR: " << err / COUNT_OF_TESTING_GREEDY << std::endl;
 	}
 }
