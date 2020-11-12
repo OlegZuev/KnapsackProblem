@@ -7,9 +7,13 @@
 class KnapsackProblemGenerator {
 public:
 	int count_of_elements;
+	double max_weight;
 	KnapsackProblemGenerator();
 	KnapsackProblemGenerator(int count_of_elements, double max_weight);
 	std::vector<Item> get_random_items();
+	std::vector<Item> get_bad_items();
+	std::vector<Item> get_avg_items();
+	std::vector<Item> get_good_items();
 	int get_random_int();
 	static void print_knapsack_problem(const std::vector<Item>& items, double m, std::ostream& ostr);
 private:

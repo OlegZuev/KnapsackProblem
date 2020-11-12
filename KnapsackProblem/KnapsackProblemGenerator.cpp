@@ -3,11 +3,13 @@
 #include <iomanip>
 
 KnapsackProblemGenerator::KnapsackProblemGenerator() : count_of_elements(5) {
+	this->max_weight = 10;
 	dist = std::uniform_int_distribution<int>(1, static_cast<int>(10));
 }
 
 KnapsackProblemGenerator::KnapsackProblemGenerator(int count_of_elements, double max_weight)  {
 	this->count_of_elements = count_of_elements;
+	this->max_weight = max_weight;
 	dist = std::uniform_int_distribution<int>(1, static_cast<int>(max_weight));
 }
 
@@ -35,6 +37,40 @@ std::vector<Item> KnapsackProblemGenerator::get_random_items() {
 
 	return items;
 }
+
+std::vector<Item> KnapsackProblemGenerator::get_bad_items() {
+	std::vector<Item> items;
+	items.reserve(count_of_elements);
+	for (int i = 0; i < count_of_elements; i++)
+	{
+		items.push_back(Item{ 1, double(i + 1), i + 1 });
+	}
+
+	return items;
+}
+
+std::vector<Item> KnapsackProblemGenerator::get_avg_items(){
+	std::vector<Item> items;
+	items.reserve(count_of_elements);
+	for (int i = 0; i < count_of_elements; i++)
+	{
+		items.push_back(Item{ 2 * max_weight / count_of_elements, double(i), i + 1 });
+	}
+
+	return items;
+}
+
+std::vector<Item> KnapsackProblemGenerator::get_good_items(){
+	std::vector<Item> items;
+	items.reserve(count_of_elements);
+	for (int i = 0; i < count_of_elements; i++)
+	{
+		items.push_back(Item{ max_weight, double(i), i + 1 });
+	}
+
+	return items;
+}
+
 
 /*
 * Print knapsack problem

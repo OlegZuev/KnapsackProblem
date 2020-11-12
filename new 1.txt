@@ -1,0 +1,2 @@
+Indexes:.+\r\n|Weights:.+\r\n|Sum value:.+\r\n|Values:.+\r\n|Greedy method|Recursive method|Iterative method|Time:.+\r\n
+(\r\n)+
