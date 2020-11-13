@@ -33,7 +33,7 @@ double t_iter_max(int n)
 }
 double t_iter_avg(int n)
 {
-	return -22.0 + 24.0 * pow(1.5, n) + 4.0 * n;
+	return 6 * pow(2, n) + 9.0 / 2 * pow(n, 2) + 31.0 * n / 4 - 4;
 }
 
 double t_gre_min(int n)
@@ -274,13 +274,13 @@ void test_func_of_complexity(std::ostream& ostr)
 	show_t_n(t_iter_avg, 3409.67 / t_iter_avg(19), ostr);
 	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
 	ostr << "t_gre_min" << std::endl;
-	show_t_n(t_gre_min, 1.0 / 3.0 / t_gre_min(19), ostr);
+	show_t_n(t_gre_min, 72.67 / t_gre_min(50000), ostr);
 	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
 	ostr << "t_gre_max" << std::endl;
-	show_t_n(t_gre_max, 2.0 / 3.0 / t_gre_max(19), ostr);
+	show_t_n(t_gre_max, 87.33 / t_gre_max(50000), ostr);
 	ostr << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
 	ostr << "t_gre_avg" << std::endl;
-	show_t_n(t_gre_avg, 1.0 / 3.0 / t_gre_avg(19), ostr);
+	show_t_n(t_gre_avg, 92.67 / t_gre_avg(50000), ostr);
 }
 
 void test_greedy(std::ostream& ostr)
